@@ -1,3 +1,11 @@
+<!--
+```hs
+
+import Colorize hiding (mkStyle, mkTextStyle)
+
+```
+-->
+
 Hacky McHacker is the son of the most renowned programmers in Lambda Land. He has just started picking programming up and his ambitious parents have given him the task to output coloured text on the terminal of his Linux box. Hacky, confused and at his wits' end, has decided to ask for a solution in a well established programmers' forum. Following a kind question in InfiniteRecursion, you have seen it. You've passed through the usual concerns whether to downvote him for asking the obvious, or being a student looking for an easy solution to their homework problem. Now you are convinced Hacky has given a fair try, because he has read the pertinent pages in WikiLambdia and as a result has already defined some constants to be used as colours and several ([stubs](https://en.wikipedia.org/wiki/Stub)) for functions like `colorize` and `bleach`. The young McHacker has also divided the problem into subproblems, but unfortunately, is not able to implement the functions.
 
 
@@ -7,7 +15,7 @@ From Hacky's description and the [link to WikiLambdia](https://en.wikipedia.org/
 
 As a beginner in Haskell, Hacky doesn't even know the function for converting an `Int` into a `String`. That's why he has declared the following two functions:
 
-```hs
+```hs     
 getLastDigit  :: Int -> Int
 dropLastDigit :: Int -> Int
 ```
@@ -15,14 +23,14 @@ dropLastDigit :: Int -> Int
 `getLastDigit` returns the last digit of a given number. Or, in a mathemetical sense, the remainder after division by 10.
 
 ```hs
-getLastDigit 12345
-> 5
+> getLastDigit 12345
+5
 
-getLastDigit 7
-> 7
+> getLastDigit 7
+7
 
-getLastDigit 0
-> 0
+> getLastDigit 0
+0
 ```
 
 Hint: Haskell doesn't have an operator for the modulo operation as the family of C-like languages do. Just use the function `mod`.
@@ -32,14 +40,14 @@ Hint: Haskell doesn't have an operator for the modulo operation as the family of
 Hint: The usual division operator `/` would not work here, because in Haskell it is defined to accept only rational numbers. Please refer to the lecture for other options.
 
 ```hs
-dropLastDigit 12345
-> 1234
+> dropLastDigit 12345
+1234
 
-dropLastDigit 7
-> 0
+> dropLastDigit 7
+0
 
-dropLastDigit 0
-> 0
+> dropLastDigit 0
+0
 ```
 
 
@@ -54,17 +62,17 @@ The algorithm is as follows:
 
 Expected results:
 ```hs
-getReverseDigits 12345
-> [5, 4, 3, 2, 1]
+> getReverseDigits 12345
+[5, 4, 3, 2, 1]
 
-getReverseDigits (-12345)
-> [5, 4, 3, 2, 1]
+> getReverseDigits (-12345)
+[5, 4, 3, 2, 1]
 
-getReverseDigits 7
-> [7]
+> getReverseDigits 7
+[7]
 
-getReverseDigits 0
-> [0]
+> getReverseDigits 0
+[0]
 ```
 
 
@@ -73,20 +81,20 @@ getReverseDigits 0
 A function mapping a digit to its character is what we need next. The solution is not very elegant, but Haskell is very stubborn here and doesn't allow us to add a number to a character as we would usually do. That's why we'll settle for an easier solution - doing pattern matching on the digits and returning the needed result. If we define the function in this manner it would not be valid for all input numbers. Such a property is not a good property and is referred to as the function being _partial_. Haskell issues a warning, making us cautious of the dangers. The solution is to make the function _total_ by adding a pattern to admit all other values and throw an error. It is worth noting that the function hasn't transformed into a _total_ function in an operational sense (i.e. it still errs for inputs different from a digit) but it is _total_ from the compiler's perspective.
 
 Use the following pattern as a final option:
-```hs
+```hs     
 toChar _ = error "Not a digit"
 ```
 
 Expected results:
 ```hs
-toChar 1
-> '1'
+> toChar 1
+'1'
 
-toChar 9
-> '9'
+> toChar 9
+'9'
 
-toChar 10
-> *** Exception: Not a digit
+> toChar 10
+*** Exception: Not a digit
 ```
 
 
@@ -94,13 +102,13 @@ toChar 10
 
 We finally have all the needed sub-functions to write
 
-```hs
+```hs    
 itoa :: Int -> String
 ```
 
 This is the time and place to deal with the reverse ordered digit list. We'll define the following helper function:
 
-```hs
+```hs    
 itoaLoop :: String -> [Int] -> String
 ```
 
@@ -110,23 +118,23 @@ The first argument is of type `String` - we'll keep the running result here. Suc
 
 `itoa` is defined trivially via `itoaLopp` (just initialize the accumulator). This technique is very commonly used in functional programming. However, not every helper function needs an accumulator (they are more widely useful, e.g. for emulating a loop) and sometimes we use accumulators outside of helper functions.
 
-```hs
-itoaLoop "" [3, 2, 1]
+```hs    
+> itoaLoop "" [3, 2, 1]
   -> itoaLoop "3" [2, 1]
     -> itoaLoop "23" [1]
       -> itoaLoop "123" []
-> "123"
+"123"
 ```
 
 ```hs
-itoa 12345
-> "12345"
+> itoa 12345
+"12345"
 
-itoa 7
-> "7"
+> itoa 7
+"7"
 
-itoa 0
-> "0"
+> itoa 0
+"0"
 ```
 
 
@@ -148,7 +156,7 @@ mkTextStyle color = mkStyle (color + textStyle)
 ```
 
 You have to implement the function
-```hs
+```hs    
 getStyle :: String -> String
 ```
 
@@ -172,17 +180,17 @@ If the input is not one of the above constants, the function should return it un
 
 Example results:
 ```hs
-getStyle "bkl"
-> "\x1B[30m"
+> getStyle "blk"
+"\x1B[30m"
 
-getStyle "blu"
-> "\x1B[34m"
+> getStyle "blu"
+"\x1B[34m"
 
-getStyle "clr"
-> "\x1B[0m"
+> getStyle "clr"
+"\x1B[0m"
 
-getStyle "other"
-> "<other>"
+> getStyle "other"
+"<other>"
 ```
 
 
@@ -191,18 +199,18 @@ getStyle "other"
 All parts of the puzzle are already present, they just need to be assembled. One of the senior forum members has implemented the function for removing styles - `bleach`, but not `colorize`. The predominant understanding is that Hacky should walk the last mile alone. A hint is given that `colorize` is very similar to `bleach` but with just a few minor (but logically significant) differences. `colorize` accepts a single `String` argument and replaces all occurences of "keywords" in it with their values. The keywords are surrounded by angle brackets `<>` and are the constants in the table from above. For exmaple `"<red>hello"` gets transformed into `"\x1B[30mhello"`. If the keyword is not one of the known ones it should be left intact. Notice that all keywords are of fixed length and are surrounded by predefined markers. Colorize does not need any extra auxiliary functions - everything needed is already defined.
 
 ```hs
-colorize "<red>hello<clr>"
-> "\x1B[30mhello"
+> colorize "<red>hello<clr>"
+"\x1B[31mhello\x1B[0m"
 
-colorize "<red>hello <blue>world<clr>"
-> "\x1B[30mhello \x1B[34mworld\x1B[0m"
+> colorize "<red>hello <blu>world<clr>"
+"\x1B[31mhello \x1B[34mworld\x1B[0m"
 
-colorize "<haskell><hsk>"
-> "<haskell><hsk>"
+> colorize "<haskell><hsk>"
+"<haskell><hsk>"
 ```
 
 Printing escape symbols is not very fun. To see the real colours use `putStrLn` as in:
-```hs
+```hs    
 putStrLn (colorize "<red>hello<clr>")
 ```
 
@@ -214,7 +222,7 @@ This exercise adds further improvements and ideas for extensions. You'll add an 
 
 The following functions should be your guide:
 
-```hs
+```hs    
 mkBackgroundStyle :: Int -> String
 dropMarkup :: String -> String
 getMarkup :: String -> String
@@ -231,9 +239,11 @@ colorize2 :: String -> String
 
 Example results:
 ```hs
-getStyle "bgr-red"
-> "\x1B[41m"
+> getStyle "bgr-red"
+"\x1B[41m"
+```
 
+```hs    
 putStrLn (colorize2 "<bgr-wht><blk>black <bgr-blk><wht> white<clr>")
 ```
 

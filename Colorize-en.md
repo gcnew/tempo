@@ -132,11 +132,11 @@ itoa 0
 
 ### Exercise #5
 
-`mkStyle` and `mkTextStyle` are already implemented by another forum member.
+`mkStyle` and `mkTextStyle` have been already implemented by another forum member.
 
-`mkStyle` accepts a single argument - style code and returns a formatted string according to the terminal's specification. In this function the operator `++` is used for glueing (concatanating) two lists.
+`mkStyle` accepts a single argument - style code and returns a formatted string according to the terminal's specification. In this function the operator `++` is used for glueing (concatanating) two lists together.
 
-`mkTextStyle` accepts a colour code and returns the corresponding style. The colours are defined as one of eight predefined options. The constant `textStyle` is an offset such that when added to a color results in a style that modifies the text colour according to the ASCII standard (text styles are in the 30~37 range).
+`mkTextStyle` accepts a colour code and returns the corresponding style. The colours are defined as one of eight predefined options. The constant `textStyle` is an offset such that when added to a colour results in a style that modifies the text colour according to the ASCII standard (text styles are in the 30~37 range).
 
 ```hs
 mkStyle :: Int -> String
@@ -166,9 +166,9 @@ It accepts one of the following `String` constants as input and returns the corr
 | "wht"  | white   |
 | "clr"  | clear<sup>[*](#getStyle-clear)   |
 
-<a name="getStyle-clear">*</a> `clr` will be used to cleanse all styles. Take a look at the appropriate constant and the function for creating generic (non-offseted) style.
+<a name="getStyle-clear">*</a> `clr` is to be used to cleanse all styles. Take a look at the appropriate constant and the function for creating a generic (non-offseted) style.
 
-If the input is not one of the above constants, the function should return the input unchanged surrounded by angle brackets `<input>`.
+If the input is not one of the above constants, the function should return it unchanged surrounded by angle brackets `<input>`.
 
 Example results:
 ```hs
@@ -188,7 +188,7 @@ getStyle "other"
 
 ### Exercise #6
 
-All parts of the puzzle are already present, they just need to be assembled. One of the senior forum members has implemented the function for removing styles - `bleach`, but not `colorize`. The predominant understanding is that Hacky should walk the last mile alone. A hint is given that `colorize` is very alike `bleach` with just a few minor (but logically significant) differences. `colorize` accepts a single `String` argument and replaces all occurences of "keywords" in it with their values. The keywords are surrounded by angle brackets `<>` and are the constants in the table from above. For example `"<red>hello"` gets transformed into `"\x1B[30mhello"`. If the keyword is not one of the known ones it should be left intact. Notice that all keywords are of fixed length and are surrounded by predefined markers. Colorize does not need any extra auxiliary functions - everything needed is already defined.
+All parts of the puzzle are already present, they just need to be assembled. One of the senior forum members has implemented the function for removing styles - `bleach`, but not `colorize`. The predominant understanding is that Hacky should walk the last mile alone. A hint is given that `colorize` is very similar to `bleach` but with just a few minor (but logically significant) differences. `colorize` accepts a single `String` argument and replaces all occurences of "keywords" in it with their values. The keywords are surrounded by angle brackets `<>` and are the constants in the table from above. For exmaple `"<red>hello"` gets transformed into `"\x1B[30mhello"`. If the keyword is not one of the known ones it should be left intact. Notice that all keywords are of fixed length and are surrounded by predefined markers. Colorize does not need any extra auxiliary functions - everything needed is already defined.
 
 ```hs
 colorize "<red>hello<clr>"
@@ -237,4 +237,4 @@ getStyle "bgr-red"
 putStrLn (colorize2 "<bgr-wht><blk>black <bgr-blk><wht> white<clr>")
 ```
 
-PS: What bug the new implementation of `colorize2` has? Can you fix it?
+PS: What bug does the new implementation of `colorize2` have? Can you fix it?
